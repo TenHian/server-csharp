@@ -9929,9 +9929,10 @@
       "settings": {
         "adjustBotAppearances": true,
         "enableChristmasHideout": true,
-        "enableSanta": true
+        "enableSanta": true,
+        "enableRundansEvent": true
       },
-      "startDay": "12",
+      "startDay": "13",
       "startMonth": "12",
       "type": "CHRISTMAS"
     },

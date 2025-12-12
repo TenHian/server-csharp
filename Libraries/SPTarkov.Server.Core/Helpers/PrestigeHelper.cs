@@ -125,6 +125,17 @@ public class PrestigeHelper(
             );
         }
 
+        // Copy over existing unlocked hideout customisation unlocks to new profile that player doesn't already have
+        newProfile.CustomisationUnlocks ??= [];
+        foreach (var oldUnlock in oldProfile.CustomisationUnlocks ?? [])
+        {
+            if (newProfile.CustomisationUnlocks.FirstOrDefault(unlock => unlock.Id == oldUnlock.Id) is null)
+            {
+                newProfile.CustomisationUnlocks.Add(oldUnlock);
+            }
+        }
+
+        // Set prestige level on new profile
         newProfile.CharacterData!.PmcData!.Info!.PrestigeLevel = prestige.PrestigeLevel;
     }
 

@@ -270,7 +270,7 @@ public class BotEquipmentFilterService(
     /// <returns>Filtered bot file</returns>
     protected void FilterCartridges(BotType baseBotNode, EquipmentFilterDetails? blacklist, EquipmentFilterDetails? whitelist)
     {
-        if (whitelist is not null)
+        if (whitelist is not null && whitelist.Cartridge is not null)
         {
             // Loop over each caliber + cartridges of that type
             foreach (var (caliber, cartridges) in baseBotNode.BotInventory.Ammo)
@@ -281,16 +281,13 @@ public class BotEquipmentFilterService(
                     continue;
                 }
 
-                // Loop over each cartridge + weight
-                // Clear all cartridges ready for whitelist to be added
-                foreach (var ammoKvP in cartridges)
-                // Cartridge not on whitelist
+                // Get all cartridges that aren't on the whitelist
+                var cartridgesToRemove = cartridges.Keys.Where(cartridge => !matchingWhitelist.Contains(cartridge)).ToList();
+
+                // Remove said cartridges from the original dictionary
+                foreach (var cartridge in cartridgesToRemove)
                 {
-                    if (!matchingWhitelist.Contains(ammoKvP.Key))
-                    // Remove
-                    {
-                        cartridges.Remove(ammoKvP.Key);
-                    }
+                    cartridges.Remove(cartridge);
                 }
             }
 
