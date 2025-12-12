@@ -518,7 +518,7 @@ public class SeasonalEventService(
         {
             EnableRunnansEvent(databaseService.GetGlobals());
         }
-        
+
         ChangeBtrToTarColaSkin();
     }
 
