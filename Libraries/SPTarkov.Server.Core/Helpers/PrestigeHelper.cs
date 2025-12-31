@@ -105,21 +105,23 @@ public class PrestigeHelper(
         // Copy transferred items
         foreach (var transferRequest in prestige.Items ?? [])
         {
-            // Get root item
-            var item = prePrestigePmc?.Inventory?.Items?.FirstOrDefault(item => item.Id == transferRequest.Id);
-            if (item is null)
+            // Get item with its attached children (if it has any)
+            var itemWithChildren = prePrestigePmc?.Inventory?.Items?.GetItemWithChildren(transferRequest.Id);
+            if (itemWithChildren is null)
             {
                 logger.Error($"Unable to find item with id: {transferRequest.Id} in profile: {sessionId}, skipping");
                 continue;
             }
 
-            if (item.Upd?.PinLockState is PinLockState.Pinned or PinLockState.Locked)
+            // Get root item so we can check its pin/lock state
+            var rootItem = itemWithChildren.FirstOrDefault(item => item.Id == transferRequest.Id);
+            if (rootItem.Upd?.PinLockState is PinLockState.Pinned or PinLockState.Locked)
             {
                 // Item has been pinned/locked and needs to be unpinned before sending to player, otherwise they can't transfer item into stash
-                item.Upd.PinLockState = PinLockState.Free;
+                rootItem.Upd.PinLockState = PinLockState.Free;
             }
 
-            itemsToTransfer.Add(item);
+            itemsToTransfer.AddRange(itemWithChildren);
         }
 
         if (itemsToTransfer.Count > 0)
