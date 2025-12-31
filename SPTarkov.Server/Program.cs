@@ -42,6 +42,27 @@ public static class Program
         }
         catch (Exception e)
         {
+            if (e.Message.Contains("could not load file or assembly 'sptarkov.server.core, version=", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.WriteLine(
+                    "========================================================================================================="
+                );
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine(
+                    "You may have installed a mod that needs a newer version of of SPT installed. Please try updating SPT"
+                );
+
+                Console.ResetColor();
+                Console.WriteLine(e);
+                Console.WriteLine(
+                    "========================================================================================================="
+                );
+
+                Console.ReadLine();
+                return;
+            }
+
             if (e.Message.Contains("could not load file or assembly", StringComparison.InvariantCultureIgnoreCase))
             {
                 Console.WriteLine(
