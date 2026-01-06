@@ -1035,7 +1035,9 @@ public class RagfairController(
 
         if (logger.IsLogEnabled(LogLevel.Debug))
         {
-            logger.Debug($"Flagged player: {sessionId} offer: {offerId} for expiry in: {TimeSpan.FromSeconds(playerOffer.EndTime.Value).ToString()}");
+            logger.Debug(
+                $"Flagged player: {sessionId} offer: {offerId} for expiry in: {TimeSpan.FromSeconds(playerOffer.EndTime.Value).ToString()}"
+            );
         }
 
         return output;
