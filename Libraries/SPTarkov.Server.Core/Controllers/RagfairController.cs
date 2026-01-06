@@ -1041,9 +1041,7 @@ public class RagfairController(
 
         if (logger.IsLogEnabled(LogLevel.Debug) && differenceInSeconds is { } remaining)
         {
-            logger.Debug(
-                $"Flagged player: {sessionId} offer: {offerId} for expiry in: {TimeSpan.FromSeconds(remaining).ToString()}"
-            );
+            logger.Debug($"Flagged player: {sessionId} offer: {offerId} for expiry in: {TimeSpan.FromSeconds(remaining).ToString()}");
         }
 
         return output;
