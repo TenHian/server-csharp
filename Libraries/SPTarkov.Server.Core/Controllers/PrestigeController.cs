@@ -88,6 +88,7 @@ public class PrestigeController(ProfileHelper profileHelper, DatabaseService dat
                     continue;
                 }
 
+                // This has to be done before the profile is wiped, as the user can only select a new head during the wipe
                 if (template.Parent == CustomisationTypeId.HEAD)
                 {
                     profileHelper.AddHideoutCustomisationUnlock(profile, reward, CustomisationSource.PRESTIGE);
